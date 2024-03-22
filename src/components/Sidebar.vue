@@ -1,8 +1,10 @@
 <template>
 	<aside :class="`${is_expanded ? 'is-expanded' : ''}`">
 		<div class="logo">
-			<img :src="logoURL" alt="Vue" /> 
+			<h3 style="font-size: 30px;margin-left: 40px; position: fixed;">RPA</h3>
+			<img :src="logoURL" alt="Vue"/>
 		</div>
+
 
 		<div class="menu-toggle-wrap">
 			<button class="menu-toggle" @click="ToggleMenu">
@@ -18,7 +20,7 @@
 			</router-link>
 			<router-link to="/about" class="button">
 				<span class="material-icons">description</span>
-				<span class="text">About</span>
+				<span class="text">Report</span>
 			</router-link>
 			<router-link to="/team" class="button">
 				<span class="material-icons">group</span>
@@ -43,7 +45,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import logoURL from '../assets/logo.png'
+import logoURL from '../assets/robot.png'
 
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
 
@@ -55,22 +57,20 @@ const ToggleMenu = () => {
 
 <style lang="scss" scoped>
 aside {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark);
+  color: var(--light);
+  width: calc(2rem + 32px);
+  overflow-x: hidden;
+  overflow-y: auto; /* เพิ่ม overflow-y: auto; เพื่อให้เมนูมีการเลื่อนแนวตั้ง */
+  min-height: 100vh;
+  padding: 1rem;
+  transition: 0.2s ease-in-out;
 
-	background-color: var(--dark);
-	color: var(--light);
-
-	width: calc(2rem + 32px);
-	overflow: hidden;
-	min-height: 100vh;
-	padding: 1rem;
-
-	transition: 0.2s ease-in-out;
-
-	.flex {
-		flex: 1 1 0%;
-	}
+  .flex {
+    flex: 1 1 0%;
+  }
 
 	.logo {
 		margin-bottom: 1rem;
@@ -83,18 +83,15 @@ aside {
 	.menu-toggle-wrap {
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: 1rem;
+		margin-bottom: 1px;
 
 		position: relative;
 		top: 0;
-		transition: 0.2s ease-in-out;
 
 		.menu-toggle {
-			transition: 0.2s ease-in-out;
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
-				transition: 0.2s ease-out;
 			}
 			
 			&:hover {
@@ -117,7 +114,6 @@ aside {
 		margin-bottom: 0.5rem;
 		text-transform: uppercase;
 	}
-
 	.menu {
 		margin: 0 -1rem;
 
@@ -125,18 +121,14 @@ aside {
 			display: flex;
 			align-items: center;
 			text-decoration: none;
-
-			transition: 0.2s ease-in-out;
 			padding: 0.5rem 1rem;
 
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
-				transition: 0.2s ease-in-out;
 			}
 			.text {
 				color: var(--light);
-				transition: 0.2s ease-in-out;
 			}
 
 			&:hover {
