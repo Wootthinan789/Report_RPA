@@ -1,6 +1,6 @@
 <template>
 	<main id="about-page">
-		<h1>Report</h1>
+		<h1>Report CS - SCSV : {{this.Year_Data}}</h1>
 		<div style="text-align: right;">
 			<button class="download-button" @click="downloadData">
 			<img :src="DownloadFile" alt="Download File" style="width: 30px; height: 30px;"/>
@@ -43,9 +43,10 @@ import * as XLSX from 'xlsx';
 export default {
 	data() {
 		return {
-			responseData: null,
+			responseData_check: null,
+			responseData_all: null,
 			currentPage: 1,
-			itemsPerPage: 35,
+			itemsPerPage: 50,
 			tableHeaders: [
 				"Time In",
 				"Costsheet",
@@ -59,17 +60,35 @@ export default {
 				"Check SV Query",
 				"SV Created By"
 			],
+			Year_Data:new Date().getFullYear(),
 			nextpage: nextpage,
 			backpage: backpage,
 			DownloadFile:DownloadFile
 		};
 	},
 	mounted() {
-		this.getData();
+		this.getData_Check();
+		this.getData_All();
 		
 	},
 	methods: {
-		async getData() {
+		async getData_Check() {
+			try {
+				const response = await fetch('http://203.154.39.190:443/costsheet/inet/map-cs-sv-check', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				const data_check = await response.json();
+				this.responseData_check = data_check;
+			} catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		},async getData_All() {
 			try {
 				const response = await fetch('http://203.154.39.190:443/costsheet/inet/map-cs-sv', {
 					method: 'GET',
@@ -80,8 +99,8 @@ export default {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				const data = await response.json();
-				this.responseData = data;
+				const data_all = await response.json();
+				this.responseData_all = data_all;
 			} catch (error) {
 				console.error('Error fetching data:', error);
 			}
@@ -97,11 +116,14 @@ export default {
 			}
 		},
 		async downloadData() {
-			if (!this.responseData) return;
-
-			const ws = XLSX.utils.json_to_sheet(this.responseData);
+			if (!this.responseData_check) return;
 			const wb = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(wb, ws, "Data");
+			const ws = XLSX.utils.json_to_sheet(this.responseData_check);
+			const ws_all = XLSX.utils.json_to_sheet(this.responseData_all);
+			
+			XLSX.utils.book_append_sheet(wb, ws, "Data_ReCheck");
+			XLSX.utils.book_append_sheet(wb, ws_all, "Data_ALL_"+this.Year_Data);
+			
 
 			// Generate XLSX file
 			const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
@@ -129,10 +151,10 @@ export default {
 		paginatedData() {
 			const startIndex = (this.currentPage - 1) * this.itemsPerPage;
 			const endIndex = startIndex + this.itemsPerPage;
-			return this.responseData ? this.responseData.slice(startIndex, endIndex) : null;
+			return this.responseData_check ? this.responseData_check.slice(startIndex, endIndex) : null;
 		},
 		totalPages() {
-			return this.responseData ? Math.ceil(this.responseData.length / this.itemsPerPage) : 0;
+			return this.responseData_check ? Math.ceil(this.responseData_check.length / this.itemsPerPage) : 0;
 		}
 	}
 };
