@@ -1,5 +1,6 @@
 <template>
 	<main id="report_cs_scsv-page">
+		<h1>{{ data_check }}</h1> 
 		<h1>Report QT Portal : ALL (ReCheck)</h1>
 		<div style="text-align: right;">
 			<button class="download-button" @click="downloadData">
@@ -13,24 +14,26 @@
 						<th v-for="header in tableHeaders" :key="header" class="center">{{ header }}</th>
 					</tr>
 				</thead>
-				<tbody v-if="paginatedData" class="data-text">
+				<tbody v-if="responseData_check == null">
+					<tr>
+						<td colspan="10" style="text-align: center;">Loading...</td>
+					</tr>
+				</tbody>
+				<tbody v-else-if="responseData_check.message === 'Not Data'">
+					<tr>
+						<td colspan="10" style="text-align: center;">No data</td>
+					</tr>
+				</tbody>
+				<tbody v-else-if="responseData_check.length === 0">
+					<tr>
+						<td colspan="10" style="text-align: center;">No data</td>
+					</tr>
+				</tbody>
+				<tbody v-else>
 					<tr v-for="(item, index) in paginatedData" :key="index">
 						<td v-for="(value, key) in item" :key="key" class="center">{{ value }}</td>
 					</tr>
 				</tbody>
-				<tbody v-else-if="tableHeaders.length=0">
-					<tr>
-                        <td  style="text-align: center;" :colspan="tableHeaders.length">Not Data..</td>
-					</tr>
-
-				</tbody>
-                <tbody v-else>
-					<tr>
-                        <td  style="text-align: center;" :colspan="tableHeaders.length">Loading...</td>
-					</tr>
-
-				</tbody>
-
 			</table>
 		</div>
 		<div class="pagination" style="font-size: 12px;">
@@ -95,6 +98,8 @@ export default {
 				}
 				const data_check = await response.json();
 				this.responseData_check = data_check;
+				console.log('responseData_check:', this.responseData_check);
+				console.log(this.responseData_check.message)
 			} catch (error) {
 				console.error('Error fetching data:', error);
 			}
@@ -124,14 +129,22 @@ export default {
 			if (this.currentPage < this.totalPages) {
 				this.currentPage++;
 			}
+			// else{
+			// 	this.totalPages === 0
+			// }
 		},
 		async downloadData() {
 			if (!this.responseData_check) return;
+			
 			const wb = XLSX.utils.book_new();
-			const ws = XLSX.utils.json_to_sheet(this.responseData_check);
+			if (this.responseData_check.length > 0){
+				const ws = XLSX.utils.json_to_sheet(this.responseData_check);
+				XLSX.utils.book_append_sheet(wb, ws, "Data_ReCheck");
+			}
+			
 			const ws_all = XLSX.utils.json_to_sheet(this.responseData_all);
 			
-			XLSX.utils.book_append_sheet(wb, ws, "Data_ReCheck");
+			
 			XLSX.utils.book_append_sheet(wb, ws_all, "Data_ALL");
 			
 
@@ -164,6 +177,9 @@ export default {
 			return this.responseData_check ? this.responseData_check.slice(startIndex, endIndex) : null;
 		},
 		totalPages() {
+			if (this.responseData_check === null || this.responseData_check.message === 'Not Data') {
+				return 0; // ให้ totalPages เป็น 0 เมื่อข้อมูลเป็น "No data"
+			}
 			return this.responseData_check ? Math.ceil(this.responseData_check.length / this.itemsPerPage) : 0;
 		}
 	}

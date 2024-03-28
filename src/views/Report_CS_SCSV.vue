@@ -119,11 +119,15 @@ export default {
 		},
 		async downloadData() {
 			if (!this.responseData_check) return;
+			if(this.responseData_check.length > 0){
+				const ws = XLSX.utils.json_to_sheet(this.responseData_check);
+			XLSX.utils.book_append_sheet(wb, ws, "Data_ReCheck");
+			}
 			const wb = XLSX.utils.book_new();
-			const ws = XLSX.utils.json_to_sheet(this.responseData_check);
+			
 			const ws_all = XLSX.utils.json_to_sheet(this.responseData_all);
 			
-			XLSX.utils.book_append_sheet(wb, ws, "Data_ReCheck");
+			
 			XLSX.utils.book_append_sheet(wb, ws_all, "Data_ALL_"+this.Year_Data);
 			
 
