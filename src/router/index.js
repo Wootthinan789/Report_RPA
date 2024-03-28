@@ -16,6 +16,10 @@ const router = createRouter({
 			path: '/report_qt_portal',
 			component: () => import('../views/Report_QT_Poratal.vue')
 		},
+		{
+			path: '/report_am',
+			component: () => import('../views/report_am.vue')
+		},
 	],
 })
 
