@@ -9,8 +9,12 @@ const router = createRouter({
 			component: Home
 		},
 		{
-			path: '/about',
-			component: () => import('../views/About.vue')
+			path: '/report_cs_scsv',
+			component: () => import('../views/Report_CS_SCSV.vue')
+		},
+		{
+			path: '/report_qt_portal',
+			component: () => import('../views/Report_QT_Poratal.vue')
 		},
 	],
 })

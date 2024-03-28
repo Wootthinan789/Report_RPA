@@ -18,9 +18,13 @@
 				<span class="material-icons">home</span>
 				<span class="text">Home</span>
 			</router-link>
-			<router-link to="/about" class="button">
+			<router-link to="/report_cs_scsv" class="button">
 				<span class="material-icons">description</span>
-				<span class="text">Report</span>
+				<span class="text">Report CS-SCSV</span>
+			</router-link>
+			<router-link to="/report_qt_portal" class="button">
+				<span class="material-icons">description</span>
+				<span class="text">Report QT Portal</span>
 			</router-link>
 			<router-link to="/team" class="button">
 				<span class="material-icons">group</span>
