@@ -20,6 +20,10 @@ const router = createRouter({
 			path: '/report_am',
 			component: () => import('../views/report_am.vue')
 		},
+		{
+			path: '/report_ou',
+			component: () => import('../views/report_ou.vue')
+		},
 	],
 })
 
