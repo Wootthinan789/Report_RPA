@@ -118,39 +118,39 @@ export default {
 			}
 		},
 		async downloadData() {
-			if (!this.responseData_check) return;
-			if(this.responseData_check.length > 0){
-				const ws = XLSX.utils.json_to_sheet(this.responseData_check);
-			XLSX.utils.book_append_sheet(wb, ws, "Data_ReCheck");
+				if (!this.responseData_check || !this.responseData_all) return;
+
+				const wb = XLSX.utils.book_new(); // สร้าง workbook ใหม่
+
+				if (this.responseData_check.length > 0) {
+					const ws = XLSX.utils.json_to_sheet(this.responseData_check);
+					XLSX.utils.book_append_sheet(wb, ws, "Data_ReCheck");
+				}
+
+				const ws_all = XLSX.utils.json_to_sheet(this.responseData_all);
+				XLSX.utils.book_append_sheet(wb, ws_all, "Data_ALL_" + this.Year_Data);
+
+				// Generate XLSX file
+				const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+				function s2ab(s) {
+					const buf = new ArrayBuffer(s.length);
+					const view = new Uint8Array(buf);
+					for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+					return buf;
+				}
+
+				const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+				// Trigger download
+				const link = document.createElement('a');
+				link.href = URL.createObjectURL(blob);
+				link.download = 'Data_costsheet_' + this.Date_Data + this.Month_Data + this.Year_Data + '.xlsx';
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
 			}
-			const wb = XLSX.utils.book_new();
-			
-			const ws_all = XLSX.utils.json_to_sheet(this.responseData_all);
-			
-			
-			XLSX.utils.book_append_sheet(wb, ws_all, "Data_ALL_"+this.Year_Data);
-			
 
-			// Generate XLSX file
-			const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-			function s2ab(s) {
-				const buf = new ArrayBuffer(s.length);
-				const view = new Uint8Array(buf);
-				for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-				return buf;
-			}
-
-			const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-
-			// Trigger download
-			const link = document.createElement('a');
-			link.href = URL.createObjectURL(blob);
-			link.download = 'Data_costsheet_'+this.Date_Data+this.Month_Data+this.Year_Data+'.xlsx';
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-		}
 
 	},
 	computed: {
