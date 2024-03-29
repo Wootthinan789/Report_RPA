@@ -24,6 +24,10 @@ const router = createRouter({
 			path: '/report_ou',
 			component: () => import('../views/report_ou.vue')
 		},
+		{
+			path: '/report_cs_jv',
+			component: () => import('../views/Report_CS-JV.vue')
+		},
 	],
 })
 

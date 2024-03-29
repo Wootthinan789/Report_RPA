@@ -1,5 +1,5 @@
 <template>
-  <h1>ou</h1>
+  <h1> coming soon.... </h1>
 </template>
 
 <script>

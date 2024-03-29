@@ -22,6 +22,10 @@
 				<span class="material-icons">description</span>
 				<span class="text">Report CS-SCSV</span>
 			</router-link>
+			<router-link to="/report_cs_jv" class="button">
+				<span class="material-icons">description</span>
+				<span class="text">Report CS-JV</span>
+			</router-link>
 			<router-link to="/report_am" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Report AM</span>
