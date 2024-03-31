@@ -1,14 +1,14 @@
 <template>
 	<main>
-		<h1>Test Report Journal Trust <i class="fa-regular fa-thumbs-up"></i></h1>
-		
-		<div style="text-align: right;">
-			<!-- <button  @click="downloadData">
-			<img :src="DownloadFile" alt="Download File" style="width: 40px; height: 40px;"/>
-			</button> -->
-			<button @click="downloadData" type="button" class="btn btn-dark btn-lg"><i class="fa-solid fa-download"></i> .xls</button>
-        </div>
+		<div class="d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Test Report Journal Trust</h1>
+    <div class="d-flex align-items-center">
+        <button @click="downloadData" type="button" class="btn btn-dark btn-md"><i class="fa-solid fa-download"></i> .xls</button>
+    </div>
+</div>
+
 		<div style="margin-top: 10px;">
+			
 			<table id="example" class="table table-striped" style="width:100%">
 				<thead>
 				<tr>
@@ -134,11 +134,5 @@ export default {
 	margin: 0 auto;
 	max-width: auto;
 }
-.download-button {
-		top: 5%;
-		right: 3%;
-		position: fixed;
-        float: right; /* Float the button to the right */
-        margin-right: 10px; /* Add some margin for spacing */
-    }
+
 </style>
