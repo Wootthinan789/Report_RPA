@@ -8,14 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "data-table-vue-v3": "^1.0.17",
+    "datatables.net": "^2.0.3",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.4",
     "sass": "^1.49.8",
-    "vite": "^2.9.18",
-    "@vitejs/plugin-vue": "^2.3.4"
+    "vite": "^2.9.18"
   }
 }
