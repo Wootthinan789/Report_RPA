@@ -171,13 +171,10 @@ export default {
 	margin: 0 auto;
 	max-width: auto;
 }
-.download-button {
-		top: 5%;
-		right: 3%;
-		position: fixed;
-        float: right; /* Float the button to the right */
-        margin-right: 10px; /* Add some margin for spacing */
-    }
+.download-button img {
+	width: 100%;
+	height: 100%;
+}
 .data-text {
 	text-align: center;
 	font-size: 12px;
