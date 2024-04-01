@@ -1,19 +1,33 @@
-FROM node:lts-alpine as build-stage
+# Use an official Node.js LTS (Long Term Support) image as the base image
+FROM node:lts as build-stage
 
-WORKDIR /tmp
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to the container
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-WORKDIR /app
-RUN cp -a /tmp/node_modules /app
-
+# Copy the entire project to the container
 COPY . .
+
+# Build the React app
 RUN npm run build
 
-# production stage
+# Use the lightweight Nginx image for the production stage
 FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d
+
+# Copy the build artifacts from the build stage to the production stage
+COPY --from=build-stage /app/build /usr/share/nginx/html
+
+# The following steps are optional and depend on your specific configuration
+# For example, if you need a custom Nginx configuration, you can include it here:
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80 to the outside world
 EXPOSE 80
+
+# Start Nginx when the container starts
 CMD ["nginx", "-g", "daemon off;"]
