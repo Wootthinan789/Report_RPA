@@ -14,39 +14,39 @@
 
 		<h3>Menu</h3>
 		<div class="menu">
-			<router-link to="/" class="button">
+			<router-link to="/Dev-RPA" class="button">
 				<span class="material-icons">home</span>
 				<span class="text">Home</span>
 			</router-link>
-			<router-link to="/report_cs_scsv" class="button">
+			<router-link to="/Dev-RPA/report_cs_scsv" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Report CS-SCSV</span>
 			</router-link>
-			<router-link to="/report_cs_jv" class="button">
+			<router-link to="/Dev-RPA/report_cs_jv" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Report CS-JV</span>
 			</router-link>
-			<router-link to="/report_am" class="button">
+			<router-link to="/Dev-RPA/report_am" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Report AM</span>
 			</router-link>
-			<router-link to="/report_ou" class="button">
+			<router-link to="/Dev-RPA/report_ou" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Report ou</span>
 			</router-link>
-			<router-link to="/report_aek" class="button">
+			<router-link to="/Dev-RPA/report_aek" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Report Aek</span>
 			</router-link>
-			<router-link to="/report_qt_portal" class="button">
+			<router-link to="/Dev-RPA/report_qt_portal" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Report QT Portal</span>
 			</router-link>
-			<router-link to="/team" class="button">
+			<router-link to="/Dev-RPA/team" class="button">
 				<span class="material-icons">group</span>
 				<span class="text">Team</span>
 			</router-link>
-			<router-link to="/contact" class="button">
+			<router-link to="/Dev-RPA/contact" class="button">
 				<span class="material-icons">email</span>
 				<span class="text">Contact</span>
 			</router-link>
@@ -55,7 +55,7 @@
 		<div class="flex"></div>
 		
 		<div class="menu">
-			<router-link to="/settings" class="button">
+			<router-link to="/Dev-RPA/settings" class="button">
 				<span class="material-icons">settings</span>
 				<span class="text">Settings</span>
 			</router-link>

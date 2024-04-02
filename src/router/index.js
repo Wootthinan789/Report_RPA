@@ -5,31 +5,31 @@ const router = createRouter({
 	history: createWebHistory(),
 	routes: [
 		{
-			path: '/',
+			path: '/Dev-RPA',
 			component: Home
 		},
 		{
-			path: '/report_cs_scsv',
+			path: '/Dev-RPA/report_cs_scsv',
 			component: () => import('../views/Report_CS_SCSV.vue')
 		},
 		{
-			path: '/report_qt_portal',
+			path: '/Dev-RPA/report_qt_portal',
 			component: () => import('../views/Report_QT_Poratal.vue')
 		},
 		{
-			path: '/report_am',
+			path: '/Dev-RPA/report_am',
 			component: () => import('../views/report_am.vue')
 		},
 		{
-			path: '/report_ou',
+			path: '/Dev-RPA/report_ou',
 			component: () => import('../views/report_ou.vue')
 		},
 		{
-			path: '/report_aek',
+			path: '/Dev-RPA/report_aek',
 			component: () => import('../views/Report_aek.vue')
 		},
 		{
-			path: '/report_cs_jv',
+			path: '/Dev-RPA/report_cs_jv',
 			component: () => import('../views/Report_CS-JV.vue')
 		},
 	],
