@@ -1,33 +1,22 @@
-# Use an official Node.js LTS (Long Term Support) image as the base image
-FROM node:lts as build-stage
+FROM node:lts-alpine as build-stage
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json to the container
+WORKDIR /tmp
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the entire project to the container
-COPY . .
+WORKDIR /app
+RUN cp -a /tmp/node_modules /app
 
-# Build the React app
+COPY . .
+RUN npm install vite
 RUN npm run build
 
-# Use the lightweight Nginx image for the production stage
+# production stage
 FROM nginx:stable-alpine as production-stage
-
-# Copy the build artifacts from the build stage to the production stage
-COPY --from=build-stage /app/build /usr/share/nginx/html
-
-# The following steps are optional and depend on your specific configuration
-# For example, if you need a custom Nginx configuration, you can include it here:
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port 80 to the outside world
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
 EXPOSE 80
-
-# Start Nginx when the container starts
+#CMD ["vite", "dev"]
+#CMD ["npm", "run", "dev"]
 CMD ["nginx", "-g", "daemon off;"]
